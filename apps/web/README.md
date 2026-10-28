@@ -29,6 +29,26 @@ To learn more about Next.js, take a look at the following resources:
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
+## Deploy on Netlify
+
+The root `netlify.toml` builds the web workspace from the repository root and
+publishes `apps/web/.next` through `@netlify/plugin-nextjs`. The adapter is required
+to generate server functions and routing for this application. Uploading `.next`
+as a static directory can finish successfully while every application URL returns
+Netlify's 404 page.
+
+Run `netlify dev --port 8889` from `apps/web` to check the application locally.
+From the repository root, use `netlify dev --port 8889 --filter web`.
+Check `/`, `/get-started`, `/deploy-your-own`, and `/api/auth/get-session`.
+For a signed-out browser, the session endpoint should return `null` with status 200.
+
+After deployment, verify that the deploy summary includes server functions and
+routing rules, then check the same URLs on the deploy preview. A local development
+check does not verify the production adapter output. OAuth sign-in and agent
+execution also require their provider credentials and services to be configured.
+The existing authentication host configuration accepts Netlify's site and deploy
+URLs automatically; set `BETTER_AUTH_URL` when an explicit canonical URL is needed.
+
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
 ## Deploy on Vercel
