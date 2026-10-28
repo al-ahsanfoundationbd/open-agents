@@ -1,0 +1,9 @@
+# The Next.js app lives in the pnpm workspace package `apps/web`.
+# Without this config Netlify publishes the repo root (no build, no index.html) and every route 404s.
+[build]
+  base = "apps/web"
+  command = "pnpm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "24"
