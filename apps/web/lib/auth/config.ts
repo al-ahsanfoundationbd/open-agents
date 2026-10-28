@@ -41,18 +41,30 @@ function getWildcardHostPattern(host: string): string | null {
 function getAuthBaseURLFallback(): string | undefined {
   return (
     process.env.BETTER_AUTH_URL ??
-    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined)
+    (process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : undefined) ??
+    process.env.DEPLOY_PRIME_URL ??
+    process.env.URL
   );
 }
 
 function getAllowedAuthHosts(): string[] {
-  const hosts = new Set<string>(["localhost:3000", "127.0.0.1:3000"]);
+  const hosts = new Set<string>([
+    "localhost:3000",
+    "127.0.0.1:3000",
+    "localhost:8889",
+    "127.0.0.1:8889",
+  ]);
 
   for (const value of [
     process.env.BETTER_AUTH_URL,
     process.env.VERCEL_URL,
     process.env.VERCEL_PROJECT_PRODUCTION_URL,
     process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL,
+    process.env.URL,
+    process.env.DEPLOY_URL,
+    process.env.DEPLOY_PRIME_URL,
   ]) {
     const host = normalizeHost(value);
     if (!host) {
